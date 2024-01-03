@@ -25,23 +25,23 @@ interface CoffeeCardProps {
   id: string;
   index: number;
   type: string;
-  rosted: string;
-  imageLink_square: ImageProps;
+  roasted: string;
+  imagelink_square: ImageProps;
   name: string;
-  special_imgredient: string;
+  special_ingredient: string;
   average_rating: number;
   price: any;
   buttonPressHandler: any;
 }
 
-const CofeeCard: React.FC<CoffeeCardProps> = ({
+const CoffeeCard: React.FC<CoffeeCardProps> = ({
   id,
   index,
   type,
-  rosted,
-  imageLink_square,
+  roasted,
+  imagelink_square,
   name,
-  special_imgredient,
+  special_ingredient,
   average_rating,
   price,
   buttonPressHandler,
@@ -53,8 +53,8 @@ const CofeeCard: React.FC<CoffeeCardProps> = ({
       style={styles.CardLinearGradientContainer}
       colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
       <ImageBackground
-        source={imageLink_square}
-        style={styles.CardImageBg}
+        source={imagelink_square}
+        style={styles.CardImageBG}
         resizeMode="cover">
         <View style={styles.CardRatingContainer}>
           <CustomIcon
@@ -65,16 +65,28 @@ const CofeeCard: React.FC<CoffeeCardProps> = ({
           <Text style={styles.CardRatingText}>{average_rating}</Text>
         </View>
       </ImageBackground>
-      <Text style={styles.CartTitle}>{name}</Text>
-      <Text style={styles.CartSubTitle}>{special_imgredient}</Text>
+      <Text style={styles.CardTitle}>{name}</Text>
+      <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
       <View style={styles.CardFooterRow}>
         <Text style={styles.CardPriceCurrency}>
-          $ <Text style={styles.CardPrice}>{price}</Text>
+          $ <Text style={styles.CardPrice}>{price.price}</Text>
         </Text>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={() => {
+            buttonPressHandler({
+              id,
+              index,
+              type,
+              roasted,
+              imagelink_square,
+              name,
+              special_ingredient,
+              prices: [{...price, quantity: 1}],
+            });
+          }}>
           <BGIcon
             color={COLORS.primaryWhiteHex}
-            name={'Add'}
+            name={'add'}
             BGColor={COLORS.primaryOrangeHex}
             size={FONTSIZE.size_10}
           />
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
     padding: SPACING.space_15,
     borderRadius: BORDERRADIUS.radius_25,
   },
-  CardImageBg: {
+  CardImageBG: {
     width: CARD_WIDTH,
     height: CARD_WIDTH,
     borderRadius: BORDERRADIUS.radius_20,
@@ -115,12 +127,12 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontSize: FONTSIZE.size_14,
   },
-  CartTitle: {
+  CardTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.primaryWhiteHex,
     fontSize: FONTSIZE.size_16,
   },
-  CartSubTitle: {
+  CardSubtitle: {
     fontFamily: FONTFAMILY.poppins_light,
     color: COLORS.primaryWhiteHex,
     fontSize: FONTSIZE.size_10,
@@ -140,4 +152,5 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
   },
 });
-export default CofeeCard;
+
+export default CoffeeCard;
